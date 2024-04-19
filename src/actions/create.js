@@ -90,12 +90,12 @@ const getQuestions = (options) => {
     {
       // If starting an archiver locally, ask which port it'll run on
       when: (answers) => answers.startArchiver,
-      default: JSON.parse(defaultNetwork.archivers)[0].port,
-      name: 'archivers',
+      default: JSON.parse(defaultNetwork.existingArchivers)[0].port,
+      name: 'existingArchivers',
       message: 'Which port do you want to run the archiver instance on?',
       validate: notNull,
       filter: (input, answers) => {
-        const archiversArray = JSON.parse(defaultNetwork.archivers)
+        const archiversArray = JSON.parse(defaultNetwork.existingArchivers)
         archiversArray[0].port = Number(input)
         return JSON.stringify(archiversArray)
       }
@@ -103,8 +103,8 @@ const getQuestions = (options) => {
     {
       // If not running an archiver locally, ask for a list of archivers in JSON format
       when: (answers) => !answers.startArchiver,
-      default: JSON.stringify(JSON.parse(defaultNetwork.archivers)),
-      name: 'archivers',
+      default: JSON.stringify(JSON.parse(defaultNetwork.existingArchivers)),
+      name: 'existingArchivers',
       message: "Enter a JSON formatted list of archivers",
       validate: (input, answers) => {
         try {
@@ -126,12 +126,12 @@ const getQuestions = (options) => {
     {
       // If starting a monitor locally, ask which port to start it on
       when: (answers) => answers.startMonitor,
-      default: new URL(defaultNetwork.monitor).port,
-      name: 'monitor',
+      default: new URL(defaultNetwork.monitorUrl).port,
+      name: 'monitorUrl',
       message: 'Which port do you want to run the monitor on ?',
-      validate: isNumber,
+      validate: notNull,
       filter: (input, answers) => {
-        const monitorUrl = new URL(defaultNetwork.monitor)
+        const monitorUrl = new URL(defaultNetwork.monitorUrl)
         monitorUrl.port = input
         return monitorUrl.toString()
       }
@@ -139,8 +139,8 @@ const getQuestions = (options) => {
     // If not starting a monitor locally, ask what the url of its API is
     {
       when: (answers) => !answers.startMonitor,
-      default: defaultNetwork.monitor,
-      name: 'monitor',
+      default: defaultNetwork.monitorUrl,
+      name: 'monitorUrl',
       message: "Enter a monitor's API URL",
       validate: (input, answers) => {
         try {
@@ -151,36 +151,36 @@ const getQuestions = (options) => {
         }
       }
     },
-    {
-      // Whether starts or not the explorer server locally
-      default: defaultNetwork.startExplorerServer,
-      name: 'startExplorerServer',
-      type: 'confirm',
-      message: 'Do you want to run an explorer-server instance locally ?',
-      validate: notNull,
-    },
-    {
-      // If yes, just ask in which port it'll run
-      default: defaultNetwork.explorerServerPort,
-      name: 'explorerServerPort',
-      message: 'Which port do you want to run the explorer-server ?',
-      validate: isNumber,
-      when: (answers) => answers.startExplorerServer,
-    },
-    {
-      default: defaultNetwork.explorerServerAddr,
-      name: 'explorerServerAddr',
-      message: "What's the explorer-server address ?",
-      validate: notNull,
-      when: (answers) => !answers.startExplorerServer,
-    },
-    {
-      default: defaultNetwork.explorerServerPort,
-      name: 'explorerServerPort',
-      message: "What's the explorer-server port ?",
-      validate: isNumber,
-      when: (answers) => !answers.startExplorerServer,
-    },
+    // {
+    //   // Whether starts or not the explorer server locally
+    //   default: defaultNetwork.startExplorerServer,
+    //   name: 'startExplorerServer',
+    //   type: 'confirm',
+    //   message: 'Do you want to run an explorer-server instance locally ?',
+    //   validate: notNull,
+    // },
+    // {
+    //   // If yes, just ask in which port it'll run
+    //   when: (answers) => answers.startExplorerServer === true,
+    //   default: defaultNetwork.explorerServerPort,
+    //   name: 'explorerServerPort',
+    //   message: 'Which port do you want to run the explorer-server ?',
+    //   validate: isNumber,
+    // },
+    // {
+    //   when: (answers) => !answers.startExplorerServer === true,
+    //   default: defaultNetwork.explorerServerAddr,
+    //   name: 'explorerServerAddr',
+    //   message: "What's the explorer-server address ?",
+    //   validate: notNull,
+    // },
+    // {
+    //   default: defaultNetwork.explorerServerPort,
+    //   name: 'explorerServerPort',
+    //   message: "What's the explorer-server port ?",
+    //   validate: isNumber,
+    //   when: (answers) => !answers.startExplorerServer,
+    // },
     {
       default: defaultNetwork.logSize,
       name: 'logSize',
