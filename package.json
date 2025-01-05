@@ -34,6 +34,8 @@
   },
   "devDependencies": {
     "np": "8.0.4",
+    "@types/node": "18.19.1",
+    "typescript": "5.7.2",
     "standard": "13.1.0"
   },
   "overrides": {
