@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "rootDir": ".",
+        "outDir": "build",
+        "lib": ["ES2021"],
+        "module": "commonjs",
+        "target": "ES2021",
+        "allowJs": true,
+        "strict": false,
+        "noImplicitAny": false,
+        "strictNullChecks": false,
+        "noImplicitReturns": false,
+        "noImplicitThis": false,
+        "esModuleInterop": true
+    },
+    "exclude": ["build", "node_modules"],
+    "include": ["*.ts", "*.js"],
+    "allowSyntheticDefaultImports": true
+}
