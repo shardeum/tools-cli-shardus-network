@@ -32,7 +32,7 @@ module.exports = async function (networkDir, num, type, pm2Args, options) {
       for (let i = 0; i < newArchiverCount; i++) {
         await util.pm2Start(
           networkDir,
-          require.resolve('@shardus/archiver', { paths: [process.cwd()] }),
+          require.resolve('@shardeum-foundation/archiver', { paths: [process.cwd()] }),
           `archive-server-${i + 1 + existingArchivers.length}`,
           {
             ARCHIVER_PORT: existingArchivers[0].port + existingArchivers.length + i,
@@ -61,7 +61,7 @@ module.exports = async function (networkDir, num, type, pm2Args, options) {
 
       await util.pm2Start(
         networkDir,
-        require.resolve('@shardus/archiver', { paths: [process.cwd()] }),
+        require.resolve('@shardeum-foundation/archiver', { paths: [process.cwd()] }),
         `archive-server-1`,
         {
           ARCHIVER_PORT: existingArchivers[0].port,
@@ -84,7 +84,7 @@ module.exports = async function (networkDir, num, type, pm2Args, options) {
       const existingArchiversEnv = existingArchivers.map((archiver) => `${archiver.ip}:${archiver.port}:${archiver.publicKey}`).join(',')
       await util.pm2Start(
         networkDir,
-        require.resolve("@shardus/monitor-server", { paths: [process.cwd()] }),
+        require.resolve("@shardeum-foundation/monitor-server", { paths: [process.cwd()] }),
         "monitor-server",
         {
           PORT: new URL(networkConfig.monitorUrl).port,
